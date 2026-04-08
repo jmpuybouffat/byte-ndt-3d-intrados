@@ -1,33 +1,31 @@
 import numpy as np
 
 class Probe2D:
-    """Modélisation de la sonde matricielle (ex: IMASONIC 8x8)"""
-    def __init__(self, nx=8, ny=8, pitch_x=0.6, pitch_y=0.6):
-        self.nx = nx
-        self.ny = ny
-        self.pitch_x = pitch_x
-        self.pitch_y = pitch_y
-        self.elements = self._generate_coordinates()
+    def __init__(self, nx=8, ny=8, pitch_x=0.6, pitch_y=0.6, gap_x=0.05, gap_y=0.05, freq_mhz=5.0):
+        self.nx, self.ny = nx, ny
+        self.pitch_x, self.pitch_y = pitch_x, pitch_y
+        self.freq_mhz = freq_mhz
+        # Les Gaps sont maintenant dynamiques (contrôlés par l'interface)
+        self.gap_x = gap_x
+        self.gap_y = gap_y
+        
+        # Calcul NDT exact de l'ouverture (Aperture)
+        self.lx = (nx * pitch_x) - self.gap_x
+        self.ly = (ny * pitch_y) - self.gap_y
+        
+        self.elements = self._generate_elements()
 
-    def _generate_coordinates(self):
-        """Calcule la position (x, y, z) de chaque élément par rapport au centre de la sonde"""
-        coords = []
-        for i in range(self.nx):
-            for j in range(self.ny):
-                x = (i - (self.nx - 1) / 2) * self.pitch_x
-                y = (j - (self.ny - 1) / 2) * self.pitch_y
-                coords.append((x, y, 0.0)) # z=0 au niveau de la face émettrice
-        return np.array(coords)
+    def _generate_elements(self):
+        x = np.linspace(-(self.lx-self.pitch_x)/2, (self.lx-self.pitch_x)/2, self.nx)
+        y = np.linspace(-(self.ly-self.pitch_y)/2, (self.ly-self.pitch_y)/2, self.ny)
+        xv, yv = np.meshgrid(x, y)
+        return np.stack((xv.flatten(), yv.flatten()), axis=1)
 
 class Wedge:
-    """Modélisation du sabot (ex: Rexolite)"""
-    def __init__(self, velocity=2330.0, squat_angle_deg=36.0, roof_angle_deg=0.0):
-        self.velocity = velocity # mm/s
-        self.squat_angle = np.radians(squat_angle_deg)
-        self.roof_angle = np.radians(roof_angle_deg)
+    def __init__(self, velocity=2330.0, angle_deg=36.0):
+        self.velocity = velocity
+        self.angle_deg = angle_deg
 
 class Specimen:
-    """Modélisation de la pièce à inspecter"""
-    def __init__(self, velocity=3240.0, thickness=50.0):
-        self.velocity = velocity # mm/s (ex: Ondes Transversales Acier)
-        self.thickness = thickness
+    def __init__(self, velocity=5900.0):
+        self.velocity = velocity
