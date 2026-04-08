@@ -1,7 +1,7 @@
 import numpy as np
 
 class Probe2D:
-    def __init__(self, nx=8, ny=8, pitch_x=0.6, pitch_y=0.6, gap_x=0.05, gap_y=0.05, freq_mhz=5.0):
+    def __init__(self, nx=8, ny=8, pitch_x=0.6, pitch_y=0.6, gap_x=0.05, gap_y=0.05, freq_mhz=5.0, **kwargs):
         self.nx, self.ny = nx, ny
         self.pitch_x, self.pitch_y = pitch_x, pitch_y
         self.freq_mhz = freq_mhz
