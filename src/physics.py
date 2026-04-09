@@ -49,8 +49,10 @@ def compute_beam_pressure_2d(probe_elements, delays_ns, velocity_m_s, freq_mhz, 
     
     # 2. Superposition (Principe de Huygens) : on additionne la contribution de chaque élément
     for i in range(len(probe_elements)):
-        ex, ey, ez = probe_elements[i]
-        delay_s = delays_ns[i] * 1e-9 # Conversion des nanosecondes en secondes
+        ex = probe_elements[i][0]
+        ey = probe_elements[i][1]
+        ez = 0.0
+        delay_s = delays_ns[i] * 1e-9 # Conversion des nanosecondes en secondesdes
         
         # Distance géométrique entre l'élément i et chaque point de la grille
         R = np.sqrt((X - ex)**2 + (Y - ey)**2 + (Z - ez)**2)
