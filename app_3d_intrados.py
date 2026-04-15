@@ -32,12 +32,8 @@ with st.sidebar:
 
 @st.cache_data
 def load_and_process_stl():
-    try:
-        aube_mesh = mesh.Mesh.from_file('DuvhaLPStg5BldRoot_EDM_NOTCHES.stl')
-        return aube_mesh.vectors
-    except Exception as e:
-        return None
-
+    aube_mesh = mesh.Mesh.from_file('DuvhaLPStg5BldRoot_EDM_NOTCHES.stl')
+    return aube_mesh.vectors
 # ==========================================
 # 🎯 VRAIES DONNÉES MAPLE (Matrice C2 et Sabot)
 # ==========================================
