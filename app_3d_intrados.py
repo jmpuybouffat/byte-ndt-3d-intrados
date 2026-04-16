@@ -15,14 +15,14 @@ with st.sidebar:
     scale_cao = st.slider("Échelle / Scale", 0.1, 5.0, 1.0, 0.01) 
     
     with st.expander("Rotations CAO / CAD Rotations"):
-        rx_cao = st.number_input("Rotation X (CAO)", value=0)
+        rx_cao = st.number_input("Rotation X (CAO)", value=90)
         ry_cao = st.number_input("Rotation Y (CAO)", value=0)
         rz_cao = st.number_input("Rotation Z (CAO)", value=0)
     
     with st.expander("Offsets CAO / CAD Offsets"):
-        dx_cao = st.number_input("Offset X (CAO)", value=0.0)
-        dy_cao = st.number_input("Offset Y (CAO)", value=0.0)
-        dz_cao = st.number_input("Offset Z (CAO)", value=0.0)
+        dx_cao = st.number_input("Offset X (CAO)", value=50.0)
+        dy_cao = st.number_input("Offset Y (CAO)", value=-75.0)
+        dz_cao = st.number_input("Offset Z (CAO)", value=115.0)
 
     st.header("📉 Calage Courbes (Maple)")
     with st.expander("Offsets Courbes / Curves Offsets"):
@@ -34,6 +34,7 @@ with st.sidebar:
 def load_and_process_stl():
     aube_mesh = mesh.Mesh.from_file('DuvhaLPStg5BldRoot_EDM_NOTCHES.stl')
     return aube_mesh.vectors
+
 # ==========================================
 # 🎯 VRAIES DONNÉES MAPLE (Matrice C2 et Sabot)
 # ==========================================
